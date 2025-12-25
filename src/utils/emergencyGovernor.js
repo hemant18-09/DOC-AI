@@ -8,6 +8,7 @@
 import { normalize } from "./normalize.js";
 import { calculateRisk } from "./riskEngine.js";
 import { CONTEXT_SIGNALS } from "./signals.js";
+import { EMERGENCY_MESSAGES } from "./emergencyMessages.js";
 
 function matchAny(text, arr) {
   return arr.some((p) => text.includes(p));
@@ -24,7 +25,7 @@ function detectContext(text) {
 
 export function assessEmergency(inputText, opts = {}) {
   const text = normalize(inputText || "");
-  const { score, categories } = calculateRisk(text);
+  const { score, categories, detectedLang } = calculateRisk(text);
   const ctx = detectContext(text);
 
   const threshold = opts.threshold ?? 70; // tuned to category weights
@@ -44,7 +45,7 @@ export function assessEmergency(inputText, opts = {}) {
     matches: [],
     reasons,
     message: isEmergency
-      ? "Potential emergency detected. This app cannot provide urgent care. Please seek immediate medical attention (call local emergency services)."
+      ? EMERGENCY_MESSAGES[detectedLang] || EMERGENCY_MESSAGES.en
       : "No emergency signals detected by screen.",
   };
 }

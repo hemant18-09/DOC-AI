@@ -1,24 +1,21 @@
 // English + Hindi + Telugu emergency signals (extensible)
 export const SYMPTOM_SIGNALS = {
   cardiac: [
-    // English
-    "chest pain",
-    "crushing chest",
-    "pain in left arm",
-    "jaw pain",
-    "heart attack",
-    "tightness in chest",
+    { text: "chest pain", lang: "en" },
+    { text: "crushing chest", lang: "en" },
+    { text: "pain in left arm", lang: "en" },
+    { text: "jaw pain", lang: "en" },
+    { text: "heart attack", lang: "en" },
+    { text: "tightness in chest", lang: "en" },
 
-    // Hindi
-    "सीने में दर्द",
-    "दिल का दौरा",
-    "बाएं हाथ में दर्द",
-    "छाती में जकड़न",
+    { text: "सीने में दर्द", lang: "hi" },
+    { text: "दिल का दौरा", lang: "hi" },
+    { text: "बाएं हाथ में दर्द", lang: "hi" },
+    { text: "छाती में जकड़न", lang: "hi" },
 
-    // Telugu
-    "ఛాతిలో నొప్పి",
-    "గుండె నొప్పి",
-    "హృదయాఘాతం",
+    { text: "ఛాతిలో నొప్పి", lang: "te" },
+    { text: "గుండె నొప్పి", lang: "te" },
+    { text: "హృదయాఘాతం", lang: "te" },
   ],
 
   neurological: [
@@ -37,15 +34,15 @@ export const SYMPTOM_SIGNALS = {
   ],
 
   respiratory: [
-    "shortness of breath",
-    "cannot breathe",
-    "gasping for air",
+    { text: "shortness of breath", lang: "en" },
+    { text: "cannot breathe", lang: "en" },
+    { text: "gasping for air", lang: "en" },
 
-    "सांस लेने में कठिनाई",
-    "सांस नहीं आ रही",
+    { text: "सांस लेने में कठिनाई", lang: "hi" },
+    { text: "सांस नहीं आ रही", lang: "hi" },
 
-    "శ్వాస తీసుకోవడంలో ఇబ్బంది",
-    "ఊపిరి రావడం లేదు",
+    { text: "శ్వాస తీసుకోవడంలో ఇబ్బంది", lang: "te" },
+    { text: "ఊపిరి రావడం లేదు", lang: "te" },
   ],
 
   bleeding: [
