@@ -10,7 +10,12 @@ function Navbar() {
             alt="Doc-AI logo"
             className="app-logo-image"
           />
-          <span className="app-logo-text">DOC-AI</span>
+          <div className="app-logo-text-section">
+            <span className="app-logo-text">DOC-AI</span>
+            <span className="app-tagline">
+              AI-assisted healthcare, designed for clarity and trust.
+            </span>
+          </div>
         </div>
         <span className="app-subtitle">
           AI assistant for symptoms, appointments & prescriptions
