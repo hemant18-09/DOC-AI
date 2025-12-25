@@ -32,10 +32,14 @@ function HomeView({ goTo }) {
     } else {
       startListening()
     }
+    // Clear any previous emergency when user re-engages speech
+    if (emergencyReport) setEmergencyReport(null)
   }
 
   const handleTextChange = (e) => {
     setTextInput(e.target.value)
+    // Clear emergency state on any manual text change
+    if (emergencyReport) setEmergencyReport(null)
   }
 
   const handleContinue = () => {
@@ -51,6 +55,8 @@ function HomeView({ goTo }) {
   useEffect(() => {
     if (text) {
       setTextInput(text)
+      // Clear emergency when new speech text arrives
+      if (emergencyReport) setEmergencyReport(null)
     }
   }, [text])
 
