@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import useSpeechToText from '../hooks/useSpeechToText.js'
+import { assessEmergency } from '../utils/emergencyGovernor.js'
 
 const LANGUAGE_MAP = {
   en: "en-US",
@@ -23,6 +24,7 @@ function HomeView({ goTo }) {
   const [textInput, setTextInput] = useState('')
   const [selectedLang, setSelectedLang] = useState('en')
   const { listening, text, startListening, stopListening, setText } = useSpeechToText(LANGUAGE_MAP[selectedLang])
+  const [emergencyReport, setEmergencyReport] = useState(null)
 
   const handleSpeak = () => {
     if (listening) {
@@ -34,6 +36,15 @@ function HomeView({ goTo }) {
 
   const handleTextChange = (e) => {
     setTextInput(e.target.value)
+  }
+
+  const handleContinue = () => {
+    const report = assessEmergency(textInput)
+    if (report.isEmergency) {
+      setEmergencyReport(report)
+      return
+    }
+    goTo('triage')
   }
 
   // Sync speech text to textInput when speech is detected
@@ -81,6 +92,25 @@ function HomeView({ goTo }) {
             You can speak in English, Hindi, Telugu, Tamil, Kannada, or Malayalam.
           </p>
         </div>
+        {emergencyReport && (
+          <div style={{
+            border: '2px solid #ef4444',
+            background: '#fee2e2',
+            color: '#991b1b',
+            borderRadius: '12px',
+            padding: '16px',
+            margin: '0 0 16px 0',
+          }}>
+            <strong style={{ display: 'block', marginBottom: 6 }}>Emergency warning</strong>
+            <div style={{ fontSize: 14, marginBottom: 6 }}>{emergencyReport.message}</div>
+            <ul style={{ margin: 0, paddingLeft: '18px', fontSize: 13 }}>
+              {emergencyReport.reasons.slice(0,3).map((r, i) => (
+                <li key={i}>{r}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <textarea
           className="symptom-input-box"
           placeholder="Describe how you're feeling in your own words type here or click the speak now button"
@@ -89,10 +119,16 @@ function HomeView({ goTo }) {
         />
         <button
           className="cta-button"
-          onClick={() => goTo('triage')}
+          onClick={handleContinue}
+          disabled={!!emergencyReport}
         >
-          Continue
+          {emergencyReport ? 'Emergency detected — seek care now' : 'Continue'}
         </button>
+        {emergencyReport && (
+          <div style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-soft)', marginTop: 8 }}>
+            For urgent help, call your local emergency number.
+          </div>
+        )}
       </div>
       <div className="trust-badges-container">
         <div className="trust-badge">
